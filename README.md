@@ -30,7 +30,8 @@ Godot 3.6 from the
 An engine older than Godot 3.6 is refused with a message on screen rather than
 failing later.
 
-The repository does not include the game, APK, libraries or assets.
+Each release includes the Android APK, built from the public Super Mario 127
+source.
 
 ---
 
@@ -209,5 +210,5 @@ This is an unofficial fan project and is not affiliated with, sponsored by or
 endorsed by Nintendo. Super Mario 127 is a fan game by Solarshine Studios.
 Mario and all related characters and trademarks belong to Nintendo.
 
-This repository contains only the compatibility code required by the Nintendo
-Switch port and does not distribute game files.
+Releases include an Android build of Super Mario 127 made from the game's
+public source code, which its developers have made free to use.
