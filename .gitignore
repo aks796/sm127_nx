@@ -1,0 +1,13 @@
+# toolchain downloads and build outputs -- never commit game or engine binaries
+/godot/
+/build/
+/build-android/
+/dist/
+*.nro
+*.nacp
+*.elf
+*.map
+*.pck
+*.so
+*.apk
+.DS_Store

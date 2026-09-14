@@ -1,0 +1,117 @@
+jni_surface_godot.txt -- the JNI surface of the engine this wrapper drives.
+
+Generated from the Super Mario 127 0.9.1 APK's lib/arm64-v8a/libgodot_android.so
+(Godot 3.6.stable.official) and its classes.dex. Regenerate with
+tools/dump_jni_surface.sh <apk>.
+
+This is the contract main.c, nx_input.c, jni_helpers.c and swkbd_shim.c code
+against: a name missing from section 1 means the engine build differs from the
+one these were written for, and so_try_find_addr_rx returns 0 for it.
+
+== 1. Native entry points the engine EXPORTS (dynsym) ==
+  Java_org_godotengine_godot_GodotLib_accelerometer
+  Java_org_godotengine_godot_GodotLib_back
+  Java_org_godotengine_godot_GodotLib_calldeferred
+  Java_org_godotengine_godot_GodotLib_callobject
+  Java_org_godotengine_godot_GodotLib_dispatchMouseEvent
+  Java_org_godotengine_godot_GodotLib_dispatchTouchEvent
+  Java_org_godotengine_godot_GodotLib_focusin
+  Java_org_godotengine_godot_GodotLib_focusout
+  Java_org_godotengine_godot_GodotLib_getEditorSetting
+  Java_org_godotengine_godot_GodotLib_getGlobal
+  Java_org_godotengine_godot_GodotLib_gravity
+  Java_org_godotengine_godot_GodotLib_gyroscope
+  Java_org_godotengine_godot_GodotLib_initialize
+  Java_org_godotengine_godot_GodotLib_joyaxis
+  Java_org_godotengine_godot_GodotLib_joybutton
+  Java_org_godotengine_godot_GodotLib_joyconnectionchanged
+  Java_org_godotengine_godot_GodotLib_joyhat
+  Java_org_godotengine_godot_GodotLib_key
+  Java_org_godotengine_godot_GodotLib_magnetometer
+  Java_org_godotengine_godot_GodotLib_magnify
+  Java_org_godotengine_godot_GodotLib_newcontext
+  Java_org_godotengine_godot_GodotLib_onRendererPaused
+  Java_org_godotengine_godot_GodotLib_onRendererResumed
+  Java_org_godotengine_godot_GodotLib_ondestroy
+  Java_org_godotengine_godot_GodotLib_pan
+  Java_org_godotengine_godot_GodotLib_requestPermissionResult
+  Java_org_godotengine_godot_GodotLib_resize
+  Java_org_godotengine_godot_GodotLib_setVirtualKeyboardHeight
+  Java_org_godotengine_godot_GodotLib_setup
+  Java_org_godotengine_godot_GodotLib_step
+  Java_org_godotengine_godot_GodotLib_ttsCallback
+  Java_org_godotengine_godot_plugin_GodotPlugin_nativeEmitSignal
+  Java_org_godotengine_godot_plugin_GodotPlugin_nativeRegisterGDNativeLibraries
+  Java_org_godotengine_godot_plugin_GodotPlugin_nativeRegisterMethod
+  Java_org_godotengine_godot_plugin_GodotPlugin_nativeRegisterSignal
+  Java_org_godotengine_godot_plugin_GodotPlugin_nativeRegisterSingleton
+
+== 2. GodotLib method signatures (from the APK's classes.dex) ==
+
+   The JVM resolves these by name, so the .so alone does not carry them. These
+   are what the C prototypes in main.c and nx_input.c must match.
+
+  accelerometer (FFF)V
+  back ()V
+  calldeferred (JLjava/lang/String;[Ljava/lang/Object;)V
+  callobject (JLjava/lang/String;[Ljava/lang/Object;)V
+  dispatchMouseEvent (IIFFFFZZ)V
+  dispatchTouchEvent (III[FZ)V
+  focusin ()V
+  focusout ()V
+  getEditorSetting (Ljava/lang/String;)Ljava/lang/String;
+  getGlobal (Ljava/lang/String;)Ljava/lang/String;
+  gravity (FFF)V
+  gyroscope (FFF)V
+  initialize (Landroid/app/Activity;Lorg/godotengine/godot/Godot;Landroid/content/res/AssetManager;Lorg/godotengine/godot/GodotIO;Lorg/godotengine/godot/utils/GodotNetUtils;Lorg/godotengine/godot/io/directory/DirectoryAccessHandler;Lorg/godotengine/godot/io/file/FileAccessHandler;Z)V
+  joyaxis (IIF)V
+  joybutton (IIZ)V
+  joyconnectionchanged (IZLjava/lang/String;)V
+  joyhat (III)V
+  key (IIIZ)V
+  magnetometer (FFF)V
+  magnify (FFF)V
+  newcontext ()V
+  onRendererPaused ()V
+  onRendererResumed ()V
+  ondestroy ()V
+  pan (FFFF)V
+  requestPermissionResult (Ljava/lang/String;Z)V
+  resize (II)V
+  setVirtualKeyboardHeight (I)V
+  setup ([Ljava/lang/String;Lorg/godotengine/godot/tts/GodotTTS;)Z
+  step ()Z
+  ttsCallback (III)V
+
+== 3. Differences from Godot 3.5.2 (why this wrapper refuses 3.5) ==
+
+  gone in 3.6      GodotLib.touch__IIII_3F        overloaded touch(), 3 exports
+                   GodotLib.touch__IIII_3FI
+                   GodotLib.touch__IIII_3FIFF
+                   GodotLib.hover
+                   GodotLib.doubleTap
+                   GodotIO.showKeyboard(Ljava/lang/String;ZIII)V
+
+  new in 3.6       GodotLib.dispatchTouchEvent    (III[FZ)V   -- nx_input.c
+                   GodotLib.dispatchMouseEvent    (IIFFFFZZ)V -- unused; the
+                                                  controller cursor synthesises
+                                                  mouse events inside Godot
+                   GodotLib.magnify / pan         gesture input, unused
+                   GodotLib.ttsCallback           TTS, unused
+                   GodotLib.getEditorSetting      editor only, unused
+                   GodotIO.showKeyboard(Ljava/lang/String;IIII)V
+                                                  bool multiline -> int type
+                   GodotTTS.*                     speak/isSpeaking/isPaused/
+                                                  pauseSpeaking/resumeSpeaking/
+                                                  stopSpeaking/getVoices
+
+  changed in 3.6   GodotLib.setup  ([Ljava/lang/String;)V
+                                -> ([Ljava/lang/String;Lorg/godotengine/godot/tts/GodotTTS;)Z
+
+  unchanged        GodotLib.initialize -- still (Activity, Godot, AssetManager,
+                   GodotIO, GodotNetUtils, DirectoryAccessHandler,
+                   FileAccessHandler, boolean)
+
+TTS_Android::setup() only caches method IDs off the GodotTTS object, so
+jni_fake.c's g_tts needs to exist but never has to answer a call unless the
+game uses OS.tts_* -- SM127 does not.
