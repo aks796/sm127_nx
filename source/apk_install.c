@@ -1,6 +1,6 @@
 /* apk_install.c -- installs the game from its Android APK on the console.
  *
- * Players put the Super Mario 127 APK next to sm127.nro. When one is there and
+ * Players put the Super Mario 127 APK next to sm127_nx.nro. When one is there and
  * it is not what is already installed, this runs before anything else starts:
  * a text screen shows progress while apk_unpack.c writes the engine libraries
  * and sm127.pck, the APK's name, size and date are recorded, and the APK is
@@ -111,7 +111,7 @@ int apk_install_run(void) {
   if (!find_apk(apk, sizeof(apk), &st)) {
     if (installed) return 0;
     fatal_error("Super Mario 127 is not installed yet.\n\n"
-                "Put the game's Android APK in\n%s\nnext to sm127.nro, then start it again.",
+                "Put the game's Android APK in\n%s\nnext to sm127_nx.nro, then start it again.",
                 config.data_root);
   }
 

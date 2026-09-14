@@ -106,7 +106,7 @@ static const char *xd_sym(u64 v, char *buf, size_t n) {
   // exactly the manual step this handler exists to remove.
   const uintptr_t wb = sm127_wrapper_base();
   if (wb && v >= wb && v < wb + 0x1000000ull) {
-    snprintf(buf, n, "sm127.nro+0x%lx", (unsigned long)(v - wb));
+    snprintf(buf, n, "sm127_nx.nro+0x%lx", (unsigned long)(v - wb));
     return buf;
   }
 
@@ -636,7 +636,7 @@ void __libnx_exception_handler(ThreadExceptionDump *ctx) {
   // The wrapper is not an so_util module, so it never appeared in this map --
   // yet half of every hang dump is wrapper frames. Its real base comes from
   // the NRO header (util.c), so these offsets work with addr2line -e sm127.elf.
-  debugPrintf("[xd]   %-40s %016lx  (sm127.nro)\n", "sm127 wrapper",
+  debugPrintf("[xd]   %-40s %016lx  (sm127_nx.nro)\n", "sm127 wrapper",
               (unsigned long)sm127_wrapper_base());
   for (so_module *m = so_get_list(); m; m = m->next)
     debugPrintf("[xd]   %-40s %016lx + %lu KB\n", m->name,

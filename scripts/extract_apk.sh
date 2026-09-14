@@ -14,7 +14,7 @@
 #
 # Nothing is modified; the APK is only read. dist/sm127/ is replaced.
 #
-# For development: players do not need this. sm127.nro installs the game from
+# For development: players do not need this. sm127_nx.nro installs the game from
 # an APK placed next to it on the first launch (source/apk_install.c). This is
 # the same unpacking on a computer, plus a check that the wrapper can bind every
 # import the engine libraries need.
@@ -75,12 +75,12 @@ fi
 # + pauses) from scenes/menu/options/controls/presets/controller/*.cfg the
 # first time the main menu loads, and rebuilds the InputMap from them, so
 # anything written here under [input] would be replaced seconds later.
-# The scripts the autoload points at are not copied: sm127.nro carries port/ in
+# The scripts the autoload points at are not copied: sm127_nx.nro carries port/ in
 # its romfs and serves it as res://switch_port/ (godot_shim.c).
 say "port helper (assets/override.cfg)"
 cat > "$OUT/assets/override.cfg" <<'CFG'
 ; Written by sm127_nx's scripts/extract_apk.sh. Not a game file.
-; Registers the port's helper autoload, which sm127.nro serves from its own files.
+; Registers the port's helper autoload, which sm127_nx.nro serves from its own files.
 
 [autoload]
 

@@ -25,7 +25,7 @@
 #define PORT_RES_DIR "switch_port"
 
 // The NRO's own basename, used to read its mtime as the build id (main.c).
-#define APP_NAME "sm127"
+#define APP_NAME "sm127_nx"
 
 #define CONFIG_NAME "config.txt"
 #define LOG_NAME "sm127_debug.log"

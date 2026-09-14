@@ -10,7 +10,7 @@ TOPDIR ?= $(CURDIR)
 include $(DEVKITPRO)/libnx/switch_rules
 
 #---------------------------------------------------------------------------------
-TARGET		:=	sm127
+TARGET		:=	sm127_nx
 APP_TITLE	:=	Super Mario 127
 APP_AUTHOR	:=	aks796, Solarshine Studios
 APP_VERSION	:=	1.0.0
@@ -135,7 +135,7 @@ $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
-# Release: dist/sm127/sm127.nro -> sdmc:/switch/sm127/. Players put the game's
+# Release: dist/sm127/sm127_nx.nro -> sdmc:/switch/sm127/. Players put the game's
 # APK next to it and the first launch installs the game (apk_install.c).
 dist: $(BUILD)
 	@mkdir -p dist/sm127

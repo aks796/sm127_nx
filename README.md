@@ -109,13 +109,13 @@ scripts/extract_apk.sh /path/to/SuperMario127-0.9.1-android-arm64.apk
 
 ## Running
 
-Download `sm127.nro` and the Android APK from the releases page.
+Download `sm127_nx.nro` and the Android APK from the releases page.
 
 Create this folder on the SD card and put both files in it:
 
 ```text
 sd:/switch/sm127/
-├── sm127.nro
+├── sm127_nx.nro
 └── SuperMario127-0.9.1-android-arm64.apk
 ```
 
@@ -131,7 +131,7 @@ Afterwards the folder looks like this:
 
 ```text
 sd:/switch/sm127/
-├── sm127.nro
+├── sm127_nx.nro
 ├── config.txt
 ├── libgodot_android.so
 ├── libc++_shared.so
@@ -152,7 +152,7 @@ while opening an installed game, then start **Super Mario 127** from the
 Homebrew Menu. Starting the Homebrew Menu from the Album gives the game far
 less memory.
 
-To update, replace `sm127.nro`. The installed game stays as it is. Put a new
+To update, replace `sm127_nx.nro`. The installed game stays as it is. Put a new
 APK in the folder to reinstall it.
 
 Settings live in `config.txt`, which is written on the first launch and

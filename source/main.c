@@ -149,7 +149,7 @@ static int s_have_pck = 0;
 
 static void check_data(void) {
   static const char *hint =
-      "Put the Super Mario 127 Android APK next to sm127.nro\n"
+      "Put the Super Mario 127 Android APK next to sm127_nx.nro\n"
       "and start it again to reinstall the game.";
   check_probe(SO_NAME, hint);
   check_probe(CXX_SO_NAME, hint);
@@ -492,7 +492,14 @@ static const char *build_id(void) {
   // app_paths_data_root(), not config.data_root: this runs while boot_stats is
   // being opened, before config is populated, which is why the first build to
   // carry this still printed the compile-time fallback.
-  snprintf(path, sizeof(path), "%s/%s.nro", app_paths_data_root(), APP_NAME);
+  // The NRO's own path when the launcher passed one, so a renamed file still
+  // has a build id; otherwise <data_root>/sm127_nx.nro.
+  extern int __system_argc;
+  extern char **__system_argv;
+  if (__system_argc > 0 && __system_argv && __system_argv[0] && __system_argv[0][0])
+    snprintf(path, sizeof(path), "%s", __system_argv[0]);
+  else
+    snprintf(path, sizeof(path), "%s/%s.nro", app_paths_data_root(), APP_NAME);
   struct stat st;
   if (stat(path, &st) == 0) {
     struct tm tm;
@@ -1021,7 +1028,7 @@ static int strip_block(char *buf, const char *begin, const char *end) {
   return n;
 }
 
-// The helper autoload. sm127.nro serves res://switch_port/ from its romfs
+// The helper autoload. sm127_nx.nro serves res://switch_port/ from its romfs
 // (godot_shim.c), so the scripts always match the NRO. Installs made by an
 // earlier build point it at res://sm127_nx/, their copy inside sm127.pck; that
 // line is replaced, and the file is created when there is none.
@@ -1047,7 +1054,7 @@ static void ensure_override_cfg(void) {
              eol ? eol : "\n");
   } else {
     snprintf(out, sizeof(out),
-             "; Written by sm127.nro. Registers the port's helper autoload, which the\n"
+             "; Written by sm127_nx.nro. Registers the port's helper autoload, which the\n"
              "; NRO serves from its own files.\n\n[autoload]\n\n" HELPER_AUTOLOAD "\n%s%s",
              buf[0] ? "\n" : "", buf);
   }
@@ -1123,7 +1130,7 @@ static void write_port_cfg(void) {
     debugPrintf("[port] could not write %s\n", p);
     return;
   }
-  fprintf(f, "; Written by sm127.nro at every boot from config.txt -- edit that instead.\n\n"
+  fprintf(f, "; Written by sm127_nx.nro at every boot from config.txt -- edit that instead.\n\n"
              "[port]\n\n"
              "cursor=%s\n"
              "cursor_height=%d\n"
